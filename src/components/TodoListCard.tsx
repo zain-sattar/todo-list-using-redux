@@ -6,15 +6,13 @@ import Header from './Header';
 import Body from './Body';
 import Footer from './Footer';
 import  style from '../styles/style'
-import '../styles/app.css'
 
 function TodoListCard() {
-  console.log('This is a card component');
-
+  
   return (
-    <Card sx={style.cardStyle}>
+    <Card className='genericStyle' sx={style.cardStyle}>
       <Header></Header>
-      <Divider/>
+      <Divider sx={style.dividorStyle}/>
       <Body></Body>
       <Footer></Footer>
     </Card>

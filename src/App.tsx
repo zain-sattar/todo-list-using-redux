@@ -1,7 +1,7 @@
 import React from 'react';
 import TodoListCard from './components/TodoListCard';
+import './styles/app.css'
 function App() {
-  console.log("This is app component");
   
   return (
     <div className="App">

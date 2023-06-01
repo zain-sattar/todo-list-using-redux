@@ -6,18 +6,31 @@ const style={
         marginTop: '100px',
         display: 'flex',
         flexDirection: 'column',
-        
+        backgroundColor:'#ff704d',
+        color: 'white',
+        boxShadow: '-10px -10px 7px rgba(0, 0, 0, 0.2)' 
     },
+    dividorStyle:{
+        backgroundColor:'white',
+    }
+    ,
     footerStyle:{
         marginTop: 'auto',
         paddingLeft: '20px',
         paddingBottom:'20px',
-        // border:"1px solid red"
+    },
+    TextFieldStyle:{
+        backgroundColor:'white',
     },
     buttonStyle:{
         height:"52px",
-        marginLeft:'8px'
+        marginLeft:'8px',
+        color:'white',
+        borderColor:'white'
     },
+    errorStyle:{
+        color:'white',
+    }
 }
 
 export default style;
