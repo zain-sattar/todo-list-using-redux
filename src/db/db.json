@@ -1,0 +1,14 @@
+{
+  "todos": [
+    {
+      "todoTask": "learn ts",
+      "isCompleted": false,
+      "id": 1
+    },
+    {
+      "todoTask": "learn react-hook-form",
+      "isCompleted": false,
+      "id": 2
+    }
+  ]
+}
