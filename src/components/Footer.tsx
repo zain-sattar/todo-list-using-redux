@@ -44,7 +44,7 @@ function Footer(){
             <Typography variant="h6" fontWeight="bold">New todo</Typography>
             <CardActions >
             <form onSubmit={handleSubmit(onSubmitHandler)}>
-                <TextField id="outlined-basic" placeholder='New todo' variant="outlined" sx={style.TextFieldStyle} {...register("todoTask")}/>
+                <TextField id="standard-basic"  variant="standard" placeholder='New todo' sx={style.TextFieldStyle} {...register("todoTask")}/>
                 <Button type="submit" variant="outlined" sx={style.buttonStyle} >ADD TODO</Button>
                 <Typography variant="body1" sx={style.errorStyle}>{errors.todoTask?.message?.toString()}</Typography>
             </form>
