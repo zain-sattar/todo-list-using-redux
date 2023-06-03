@@ -1,12 +1,13 @@
 import { hookstate } from '@hookstate/core';
 
-type Task={
-    task:String,
+export type TaskType={
+    todo:String,
     isCompleted:boolean,
-    id:number
+    id?:number
 }
-const taskList:Task[]=[]
+const taskList: TaskType[] = []; 
 const store=hookstate({
     taskList
 })
 export default store;
+

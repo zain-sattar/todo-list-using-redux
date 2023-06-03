@@ -1,8 +1,7 @@
 const todoActionsStyle={
     todoActionsStyle:{
         marginTop: 'auto',
-        paddingLeft: '20px',
-        paddingBottom:'20px',
+        padding:'0px 0px 20px 20px'
     },
     textFieldStyle:{
         height:52,
