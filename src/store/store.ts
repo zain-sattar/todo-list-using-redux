@@ -1,12 +1,13 @@
-import { hookstate } from '@hookstate/core';
+import { hookstate } from "@hookstate/core";
 
-type Task={
-    task:String,
-    isCompleted:boolean,
-    id:number
-}
-const taskList:Task[]=[]
-const store=hookstate({
-    taskList
-})
-export default store;
+type Task = {
+  task: String;
+  isCompleted: boolean;
+  id: number;
+};
+
+const taskList: Task[] = [];
+
+export const store = hookstate({
+  taskList,
+});

@@ -1,13 +1,10 @@
-import React from 'react';
-import TodoListCard from './components/TodoListCard';
-import './styles/app.css'
+import TodoListCard from "./components/TodoListCard";
+import "./app.css";
 function App() {
-  
   return (
     <div className="App">
-      <TodoListCard/>
+      <TodoListCard />
     </div>
   );
 }
-
 export default App;
