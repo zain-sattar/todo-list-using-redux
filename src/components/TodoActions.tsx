@@ -1,13 +1,8 @@
-
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
-import TextField from '@mui/material/TextField';
+import {Box, Typography, TextField, Button, CardActions} from '@mui/material'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import schema from '../utils/data';
 import { yupResolver } from '@hookform/resolvers/yup';
-import todoActionsStyle from '../styles/todoActions';
+import todoActionsStyle from './todoActions';
 import {TaskType} from "../store/store"
 import {  useMutation, useQueryClient } from 'react-query';
 import { addTodo } from '../api/todoApi';
@@ -22,7 +17,6 @@ function TodoActions(){
 
     const addTodoMutation=useMutation(addTodo,{
         onSuccess:()=>{
-            //Invalidate the cache and refetch
             queryClient.invalidateQueries('todos')
         }
     })
