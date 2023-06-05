@@ -1,6 +1,6 @@
 import React from 'react';
 import TodoListCard from './components/TodoListCard';
-import './styles/app.css'
+import './App.css'
 import {QueryClient,QueryClientProvider} from 'react-query'
 const queryClient = new QueryClient()
 
@@ -12,5 +12,5 @@ function App() {
     </QueryClientProvider>
   );
 }
-
 export default App;
+

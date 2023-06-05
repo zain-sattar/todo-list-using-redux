@@ -5,9 +5,9 @@ export type TaskType={
     isCompleted:boolean,
     id?:number
 }
-const taskList: TaskType[] = []; 
-const store=hookstate({
-    taskList
-})
-export default store;
 
+const taskList: TaskType[] = []; 
+
+export const store=hookstate({
+    taskList
+});
