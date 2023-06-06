@@ -1,11 +1,12 @@
-import { Box, Typography, TextField, Button, CardActions } from "@mui/material";
+import { Box, Button, CardActions, Typography, TextField } from "@mui/material";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
-import { schema } from "../utils/data";
 import { yupResolver } from "@hookform/resolvers/yup";
-import todoActionsStyle from "./todoActions";
-import { TaskType } from "../store/store";
 import { useMutation, useQueryClient } from "react-query";
-import { addTodo } from "../api/todoApi";
+
+import { schema } from "../../utils/data";
+import todoActionsStyle from "./todoActions";
+import { TaskType } from "../../store/";
+import { addTodo } from "../../api/todoApi";
 
 function TodoActions() {
   const {
@@ -28,7 +29,7 @@ function TodoActions() {
   const onSubmitHandler: SubmitHandler<FieldValues> = (data) => {
     const todoTask: TaskType = {
       todo: data.todoTask,
-      isCompleted: false, // Set the completed value to false initially
+      isCompleted: false,
     };
     addTodoMutation.mutate(todoTask);
     reset();

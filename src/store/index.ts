@@ -6,8 +6,8 @@ export type TaskType = {
   id?: number;
 };
 
-const taskList: TaskType[] = [];
+const todoList: TaskType[] = []; //initial state
 
 export const store = hookstate({
-  taskList,
+  todoList,
 });

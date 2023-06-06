@@ -1,7 +1,7 @@
 import { Typography, Card, CardHeader, Divider } from "@mui/material";
-import TodoList from "./TodoList";
-import TodoActions from "./TodoActions";
-import cardStyle from "./todoListCard";
+import TodoList from "../TodoList/";
+import TodoActions from "../TodoActions/";
+import cardStyle from "./card";
 
 function TodoListCard() {
   return (

@@ -1,18 +1,21 @@
 import { CardContent, Box, Typography, IconButton } from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
-import style from "./todoList";
-import { getTodos } from "../api/todoApi";
-import { TaskType, store } from "../store/store";
+import { Edit, Delete } from "@mui/icons-material";
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { deleteTodo, editTodo } from "../api/todoApi";
-import { useHookstate } from "@hookstate/core";
+
+import style from "./todoList";
+import { getTodos, deleteTodo, editTodo } from "../../api/todoApi";
+import {TaskType}  from "../../store";
+import { useGlobalState } from "../../store/todoController";
 
 function TodoList() {
-  const { taskList } = useHookstate(store);
-
-  const { data, status } = useQuery("todos", getTodos);
-
+  const todoListState = useGlobalState();
   const queryClient = useQueryClient();
+
+  const {status} = useQuery("todos", getTodos, {
+    onSuccess: (data) => {
+      todoListState.setTodoList(data);
+    },
+  });
 
   const deleteTodoMutation = useMutation(deleteTodo, {
     onSuccess: () => {
@@ -43,7 +46,6 @@ function TodoList() {
     );
   }
   if (status === "error") {
-    console.log("error");
     return (
       <Typography variant="h4" sx={style.todoTaskStyle}>
         Error!
@@ -51,12 +53,11 @@ function TodoList() {
     );
   }
 
-  taskList.set(data);
-
+  const todos = todoListState.getTodoList();
   return (
     <CardContent sx={style.body}>
-      {taskList.get() &&
-        taskList.get().map((todo: TaskType) => (
+      {todos &&
+        todos.map((todo: TaskType) => (
           <Box key={todo.id} sx={style.todoTaskBoxStyle}>
             <Typography
               variant="h6"
@@ -88,4 +89,5 @@ function TodoList() {
     </CardContent>
   );
 }
+
 export default TodoList;

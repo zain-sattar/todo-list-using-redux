@@ -1,4 +1,4 @@
-import { TaskType } from "../store/store";
+import { TaskType } from "../store/";
 import axios from "axios";
 
 const todoApi = axios.create({

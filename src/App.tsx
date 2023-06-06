@@ -1,9 +1,8 @@
-import React from "react";
-import TodoListCard from "./components/TodoListCard";
-import "./App.css";
 import { QueryClient, QueryClientProvider } from "react-query";
-const queryClient = new QueryClient();
+import TodoListCard from "./components/Card";
+import "./App.css";
 
+const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
