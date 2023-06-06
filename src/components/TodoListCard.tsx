@@ -17,8 +17,8 @@ function TodoListCard() {
         }
       />
       <Divider sx={cardStyle.dividorStyle} />
-      <TodoList></TodoList>
-      <TodoActions></TodoActions>
+      <TodoList/>
+      <TodoActions/>
     </Card>
   );
 }
