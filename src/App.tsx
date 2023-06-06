@@ -1,5 +1,6 @@
-import TodoListCard from "./components/TodoListCard";
+import TodoListCard from "./components/Card";
 import "./app.css";
+
 function App() {
   return (
     <div className="App">
@@ -7,4 +8,5 @@ function App() {
     </div>
   );
 }
+
 export default App;

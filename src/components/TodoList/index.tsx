@@ -1,9 +1,7 @@
-import CardContent from "@mui/material/CardContent";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import { Box, Typography } from "@mui/material";
+import {CardContent, Box, Typography,IconButton } from "@mui/material";
+import { Edit, Delete } from "@mui/icons-material";
 import style from "./todoList";
+
 function TodoList() {
   const todoItems = [
     { text: "Hello world", completed: false },
@@ -24,10 +22,10 @@ function TodoList() {
               {todo.text}
             </Typography>
             <IconButton aria-label="edit">
-              <EditIcon sx={{ color: "white" }} />
+              <Edit sx={{ color: "white" }} />
             </IconButton>
             <IconButton aria-label="delete">
-              <DeleteIcon sx={{ color: "white" }} />
+              <Delete sx={{ color: "white" }} />
             </IconButton>
           </Box>
         ))}

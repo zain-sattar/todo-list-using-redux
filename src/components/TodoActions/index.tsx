@@ -1,14 +1,10 @@
 import { Box, Button, CardActions, Typography, TextField } from "@mui/material";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
-import { schema } from "../utils/data";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "../../utils/data";
 import todoActionsStyle from "./todoActions";
-import { store } from "../store/store";
-import { useHookstate } from "@hookstate/core";
 
 function TodoActions() {
-  const { taskList } = useHookstate(store);
-
   const {
     register,
     handleSubmit,
@@ -51,4 +47,5 @@ function TodoActions() {
     </Box>
   );
 }
+
 export default TodoActions;
