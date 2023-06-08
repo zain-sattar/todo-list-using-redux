@@ -1,29 +1,24 @@
 {
   "todos": [
     {
-      "todo": "learn react-hook-state",
-      "isCompleted": true,
-      "id": 1
-    },
-    {
-      "todo": "lean react query",
-      "isCompleted": false,
-      "id": 2
-    },
-    {
-      "todo": "lean react query",
-      "isCompleted": false,
-      "id": 4
-    },
-    {
-      "todo": "test datat 2",
-      "isCompleted": false,
-      "id": 5
-    },
-    {
-      "todo": "test data ",
+      "task": "test data set 2",
       "isCompleted": false,
       "id": 6
+    },
+    {
+      "task": "test data",
+      "isCompleted": true,
+      "id": 7
+    },
+    {
+      "task": "xml",
+      "isCompleted": true,
+      "id": 8
+    },
+    {
+      "task": "learn react-hook-state",
+      "isCompleted": false,
+      "id": 9
     }
   ]
 }

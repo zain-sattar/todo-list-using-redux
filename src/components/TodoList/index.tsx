@@ -1,19 +1,23 @@
 import { CardContent, Box, Typography, IconButton } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
+import { Edit, Delete, Done } from "@mui/icons-material";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 
-import style from "./todoList";
+import style from "./styles";
 import { getTodos, deleteTodo, editTodo } from "../../api/todoApi";
-import {TaskType}  from "../../store";
-import { useGlobalState } from "../../store/todoController";
+import { TaskType } from "../../store";
+import {
+  setTodoList,
+  setSelectedTodo,
+  getTodoList,
+} from "../../store/todoController";
 
 function TodoList() {
-  const todoListState = useGlobalState();
+  console.log("todoList component");
   const queryClient = useQueryClient();
 
-  const {status} = useQuery("todos", getTodos, {
+  const { status } = useQuery("todos", getTodos, {
     onSuccess: (data) => {
-      todoListState.setTodoList(data);
+      setTodoList(data);
     },
   });
 
@@ -29,63 +33,72 @@ function TodoList() {
     },
   });
 
-  const editHandler = async (todo: TaskType) => {
+  const doneHandler = async (todo: TaskType) => {
     const updatedTodo = { ...todo, isCompleted: !todo.isCompleted };
     editTodoMutation.mutate(updatedTodo);
+  };
+
+  const editHandler = async (todo: TaskType) => {
+    setSelectedTodo(todo);
   };
 
   const deleteHandler = async (id: number = 0) => {
     deleteTodoMutation.mutate(id);
   };
 
-  if (status === "loading") {
+  if (status === "loading")
     return (
       <Typography variant="h4" sx={style.todoTaskStyle}>
         Loading...
       </Typography>
     );
-  }
-  if (status === "error") {
+  if (status === "error")
     return (
       <Typography variant="h4" sx={style.todoTaskStyle}>
         Error!
       </Typography>
     );
-  }
 
-  const todos = todoListState.getTodoList();
+  const todos = getTodoList();
   return (
     <CardContent sx={style.body}>
-      {todos &&
-        todos.map((todo: TaskType) => (
-          <Box key={todo.id} sx={style.todoTaskBoxStyle}>
-            <Typography
-              variant="h6"
-              sx={{
-                ...style.todoTaskStyle,
-                ...(todo.isCompleted && style.completedTaskStyle),
-              }}
-            >
-              {todo.todo}
-            </Typography>
-            <IconButton
-              aria-label="edit"
-              onClick={() => {
-                editHandler(todo);
-              }}
-            >
-              <Edit sx={{ color: "white" }} />
-            </IconButton>
-            <IconButton
-              aria-label="delete"
-              onClick={() => {
-                deleteHandler(todo.id);
-              }}
-            >
-              <Delete sx={{ color: "white" }} />
-            </IconButton>
-          </Box>
-        ))}
+      {todos?.map((todo: TaskType) => (
+        <Box key={todo.id} sx={style.todoTaskBoxStyle}>
+          <Typography
+            variant="h6"
+            sx={{
+              ...style.todoTaskStyle,
+              ...(todo.isCompleted && style.completedTaskStyle),
+            }}
+          >
+            {todo.task}
+          </Typography>
+          <IconButton
+            aria-label="done"
+            onClick={() => {
+              doneHandler(todo);
+            }}
+          >
+            <Done sx={{ color: "white" }} />
+          </IconButton>
+          <IconButton
+            aria-label="edit"
+            onClick={() => {
+              editHandler(todo);
+            }}
+          >
+            <Edit sx={{ color: "white" }} />
+          </IconButton>
+          <IconButton
+            aria-label="delete"
+            onClick={() => {
+              deleteHandler(todo.id);
+            }}
+          >
+            <Delete sx={{ color: "white" }} />
+          </IconButton>
+        </Box>
+      ))}
     </CardContent>
   );
 }

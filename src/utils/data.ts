@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
-const schema = yup.object().shape({
+const todoSchema = yup.object().shape({
   todoTask: yup.string().required("This field is required"),
 });
 
-export { schema };
+export { todoSchema };

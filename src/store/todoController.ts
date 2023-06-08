@@ -1,13 +1,19 @@
 import { useHookstate } from "@hookstate/core";
-import { TaskType, store } from "./";
+import { TaskType, globalState } from "./";
 
-export const useGlobalState = () => {
-  const todoListState = useHookstate(store);
+export const setTodoList = (data: TaskType[]) => {
+  globalState.todoList.set(data);
+};
 
-  return {
-    getTodoList: () => todoListState.todoList.get(),
-    setTodoList: (data: TaskType[]) => {
-      todoListState.todoList.set(data);
-    },
-  };
+export const getTodoList = () => globalState.todoList.get();
+
+export const getSelectedTodo = () => globalState.todoTask.get();
+
+export const setSelectedTodo = (todo: TaskType | undefined) => {
+  if (todo) globalState.todoTask.set(JSON.parse(JSON.stringify(todo)));
+  else globalState.todoTask.set(todo);
+};
+
+export const useTodoState = () => {
+  return useHookstate(globalState);
 };

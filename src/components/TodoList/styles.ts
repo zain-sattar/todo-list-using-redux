@@ -1,20 +1,22 @@
 const todoListStyle = {
   body: {
     padding: 0,
-    margin: 0,
+    marginTop: "50px",
     overflowY: "auto",
+    height: "375px",
   },
   todoTaskBoxStyle: {
-    height: 60,
+    height: 70,
     marginBottom: "5px",
-    backgroundColor: "#fca792",
+    backgroundColor: "#ff7776",
     display: "flex",
     alignItems: "center",
+    justifyContent: "flex-start",
   },
   todoTaskStyle: {
-    flexGrow: 1,
-    marginRight: "10px",
-    paddingLeft: "20px",
+    height: 35,
+    width: "300px",
+    margin: "0px 50px",
   },
   completedTaskStyle: {
     textDecoration: "line-through",
