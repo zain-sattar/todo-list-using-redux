@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { TaskType } from "../store/";
+import { TaskType } from "../store/todoController";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const todoApi = axios.create({
