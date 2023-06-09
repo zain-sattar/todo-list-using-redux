@@ -1,14 +1,9 @@
 {
   "todos": [
     {
-      "task": "learn react-hook-state",
-      "isCompleted": false,
-      "id": 4
-    },
-    {
-      "task": "kjxnm",
-      "isCompleted": false,
-      "id": 5
+      "task": "uit",
+      "isCompleted": true,
+      "id": 1
     }
   ]
 }
