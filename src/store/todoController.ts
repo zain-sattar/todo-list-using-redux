@@ -21,7 +21,7 @@ const todoStateControllerHandler = (state: any) => {
       return state.todoList.set(data);
     },
     getTodoList() {
-      return state.todoTask.get();
+      return state.todoList.get();
     },
     getSelectedTodo() {
       return state.todoTask.get();
