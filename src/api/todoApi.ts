@@ -3,29 +3,27 @@ import axios from "axios";
 import { TaskType } from "../store/";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-const baseURL = `${BASE_URL}/todos`;
-
 const todoApi = axios.create({
-  baseURL,
+  baseURL: `${BASE_URL}/todos`,
 });
 
 const getTodos = async () => {
-  const response = await todoApi.get(baseURL);
+  const response = await todoApi.get("/");
   return response.data;
 };
 
 const addTodo = async (todo: TaskType) => {
-  const response = await todoApi.post(baseURL, todo);
+  const response = await todoApi.post("/", todo);
   return response.data;
 };
 
 const deleteTodo = async (id: number) => {
-  const response = await todoApi.delete(`${baseURL}/${id}`);
+  const response = await todoApi.delete(`/${id}`);
   return response.data;
 };
 
 const editTodo = async (todo: TaskType) => {
-  const response = await todoApi.patch(`${baseURL}/${todo.id}`, todo);
+  const response = await todoApi.patch(`/${todo.id}`, todo);
   return response.data;
 };
 

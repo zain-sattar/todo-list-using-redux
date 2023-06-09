@@ -4,20 +4,15 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 
 import style from "./styles";
 import { getTodos, deleteTodo, editTodo } from "../../api/todoApi";
-import { TaskType } from "../../store";
-import {
-  setTodoList,
-  setSelectedTodo,
-  getTodoList,
-} from "../../store/todoController";
+import {TaskType , todoStateController, useTodoState } from "../../store/todoController";
 
 function TodoList() {
-  console.log("todoList component");
+  const todoState=useTodoState();
   const queryClient = useQueryClient();
 
   const { status } = useQuery("todos", getTodos, {
     onSuccess: (data) => {
-      setTodoList(data);
+      todoStateController.setTodoList(data);
     },
   });
 
@@ -33,13 +28,13 @@ function TodoList() {
     },
   });
 
-  const doneHandler = async (todo: TaskType) => {
+  const toggleCompletionHandler = async (todo: TaskType) => {
     const updatedTodo = { ...todo, isCompleted: !todo.isCompleted };
     editTodoMutation.mutate(updatedTodo);
   };
 
   const editHandler = async (todo: TaskType) => {
-    setSelectedTodo(todo);
+    todoStateController.setSelectedTodo(todo);
   };
 
   const deleteHandler = async (id: number = 0) => {
@@ -59,7 +54,7 @@ function TodoList() {
       </Typography>
     );
 
-  const todos = getTodoList();
+  const todos = todoState.todoList.get()
   return (
     <CardContent sx={style.body}>
       {todos?.map((todo: TaskType) => (
@@ -76,7 +71,7 @@ function TodoList() {
           <IconButton
             aria-label="done"
             onClick={() => {
-              doneHandler(todo);
+              toggleCompletionHandler(todo);
             }}
           >
             <Done sx={{ color: "white" }} />
