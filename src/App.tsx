@@ -1,12 +1,13 @@
+import { QueryClient, QueryClientProvider } from "react-query";
 import TodoListCard from "./components/Card";
-import "./app.css";
+import "./App.css";
 
+const queryClient = new QueryClient();
 function App() {
   return (
-    <div className="App">
+    <QueryClientProvider client={queryClient}>
       <TodoListCard />
-    </div>
+    </QueryClientProvider>
   );
 }
-
 export default App;
