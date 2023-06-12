@@ -1,13 +1,13 @@
-import { QueryClient, QueryClientProvider } from "react-query";
 import TodoListCard from "./components/Card";
+import { Provider } from "react-redux";
 import "./App.css";
+import store from "./store/store"
 
-const queryClient = new QueryClient();
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
       <TodoListCard />
-    </QueryClientProvider>
+    </Provider>
   );
 }
 export default App;

@@ -1,63 +1,41 @@
 import { CardContent, Box, Typography, IconButton } from "@mui/material";
 import { Edit, Delete, Done } from "@mui/icons-material";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useSelector, useDispatch } from "react-redux";
 
+import { useEffect } from "react";
+import { RootState } from "../../store/store";
+import {
+  Todo,
+  updateTodo,
+  deleteTodo,
+  setTodoItem,
+} from "../../store/todoSlice";
 import style from "./styles";
-import { getTodos, deleteTodo, editTodo } from "../../api/todoApi";
-import {TaskType , todoStateController, useTodoState } from "../../store/todoController";
 
 function TodoList() {
-  const todoState=useTodoState();
-  const queryClient = useQueryClient();
+  const todos = useSelector((state: RootState) => state.todoList.todos);
+  const dispatch = useDispatch();
 
-  const { status } = useQuery("todos", getTodos, {
-    onSuccess: (data) => {
-      todoStateController.setTodoList(data);
-    },
-  });
+  useEffect(() => {
+    dispatch({ type: "todos/fetchTodos" });
+  }, [dispatch]);
 
-  const deleteTodoMutation = useMutation(deleteTodo, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("todos");
-    },
-  });
-
-  const editTodoMutation = useMutation(editTodo, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("todos");
-    },
-  });
-
-  const toggleCompletionHandler = async (todo: TaskType) => {
+  const toggleCompletionHandler = async (todo: Todo) => {
     const updatedTodo = { ...todo, isCompleted: !todo.isCompleted };
-    editTodoMutation.mutate(updatedTodo);
+    dispatch(updateTodo(updatedTodo));
   };
 
-  const editHandler = async (todo: TaskType) => {
-    todoStateController.setSelectedTodo(todo);
+  const editHandler = async (todo: Todo) => {
+    dispatch(setTodoItem(todo));
   };
 
   const deleteHandler = async (id: number = 0) => {
-    deleteTodoMutation.mutate(id);
+    dispatch(deleteTodo(id));
   };
 
-  if (status === "loading")
-    return (
-      <Typography variant="h4" sx={style.todoTaskStyle}>
-        Loading...
-      </Typography>
-    );
-  if (status === "error")
-    return (
-      <Typography variant="h4" sx={style.todoTaskStyle}>
-        Error!
-      </Typography>
-    );
-
-  const todos = todoState.todoList.get()
   return (
     <CardContent sx={style.body}>
-      {todos?.map((todo: TaskType) => (
+      {todos?.map((todo) => (
         <Box key={todo.id} sx={style.todoTaskBoxStyle}>
           <Typography
             variant="h6"

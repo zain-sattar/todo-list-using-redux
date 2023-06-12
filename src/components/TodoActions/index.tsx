@@ -1,64 +1,52 @@
 import { Box, Button, CardActions, Typography, TextField } from "@mui/material";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useMutation, useQueryClient } from "react-query";
 import { useEffect } from "react";
 
 import { todoSchema } from "../../utils/data";
 import todoActionsStyle from "./styles";
-import { TaskType ,useTodoState,todoStateController} from "../../store/todoController";
-import { addTodo, editTodo } from "../../api/todoApi";
+import { Todo, addTodo, setTodoItem, updateTodo } from "../../store/todoSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../store/store";
 
 function TodoActions() {
-  const todoState = useTodoState();
-  const selectedTodo = todoState.todoTask.get();
-
+  const selectedTodo = useSelector(
+    (state: RootState) => state.todoList.todoItem
+  );
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
     setValue,
   } = useForm({
     resolver: yupResolver(todoSchema),
   });
 
-  const queryClient = useQueryClient();
-  const mutation = useMutation(selectedTodo ? editTodo : addTodo, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("todos");
-      todoStateController.setSelectedTodo(undefined);
-      reset();
-    },
-  });
-
   const onSubmitHandler: SubmitHandler<FieldValues> = (data) => {
-    const todoTask: TaskType = {
-      task: data.todoTask,
-      isCompleted: false,
-    };
-
     if (selectedTodo) {
       const updatedTodo = {
         ...selectedTodo,
         task: data.todoTask,
-      } as TaskType;
-      todoStateController.setSelectedTodo(updatedTodo);
-      mutation.mutate(updatedTodo);
+      } as Todo;
+      dispatch(updateTodo(updatedTodo));
     } else {
-      mutation.mutate(todoTask);
+      const todoTask: Todo = {
+        task: data.todoTask,
+        isCompleted: false,
+      };
+      dispatch(addTodo(todoTask));
     }
+    dispatch(setTodoItem(undefined));
   };
 
   const onCancelHandler = () => {
-    todoStateController.setSelectedTodo(undefined);
-    setValue("todoTask", "");
+    dispatch(setTodoItem(undefined));
   };
 
   useEffect(() => {
-    if (selectedTodo) {
-      setValue("todoTask", selectedTodo.task);
-    }
+    if (selectedTodo) setValue("todoTask", selectedTodo.task);
+    else setValue("todoTask", null);
   }, [selectedTodo, setValue]);
 
   const formHeading = selectedTodo ? "Edit todo" : "New todo";
