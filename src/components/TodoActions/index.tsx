@@ -79,7 +79,7 @@ const TodoActions: React.FC<TodoActionsProps> = (props) => {
           <TextField
             id="standard-basic"
             variant="standard"
-            placeholder={selectedTodo ? "Edit todo" : "New todo"}
+            placeholder={formHeading}
             sx={
               selectedTodo
                 ? todoActionsStyle.editTextFieldStyle
