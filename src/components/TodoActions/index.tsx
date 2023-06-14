@@ -54,8 +54,17 @@ const TodoActions: React.FC<TodoActionsProps> = (props) => {
     else setValue("todoTask", null);
   }, [selectedTodo, setValue]);
 
-  const formHeading = selectedTodo ? "Edit todo" : "New todo";
-  const submitButtonLabel = selectedTodo ? "Save" : "ADD TODO";
+  enum TodoFormLabels {
+    Edit = "Edit todo",
+    New = "New todo",
+  }
+  
+  enum TodoFormButtonLabels {
+    Save = "Save",
+    AddTodo = "ADD TODO",
+  }
+  const formHeading = selectedTodo ? TodoFormLabels.Edit : TodoFormLabels.New;
+  const submitButtonLabel = selectedTodo ? TodoFormButtonLabels.Save:TodoFormButtonLabels.AddTodo;
   return (
     <Box sx={todoActionsStyle.todoActionsStyle}>
       <Typography
