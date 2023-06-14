@@ -18,7 +18,7 @@ import {
   resetError,
 } from "./todoSlice";
 
-function* addTodoSaga(action: PayloadAction<Todo>): Generator<any, void, any> {
+function* addTodoSaga(action: PayloadAction<Todo>): Generator {
   try {
     yield call(addTodoApi, action.payload);
     yield put(resetError());
@@ -27,7 +27,7 @@ function* addTodoSaga(action: PayloadAction<Todo>): Generator<any, void, any> {
   }
 }
 
-function* fetchTodosSaga(): Generator<any, void, any> {
+function* fetchTodosSaga():Generator<any, void, Todo[]> {
   try {
     const todos = yield call(getTodosApi);
     yield put(fetchTodosSuccess(todos));
@@ -36,9 +36,7 @@ function* fetchTodosSaga(): Generator<any, void, any> {
   }
 }
 
-function* deleteTodoSaga(
-  action: PayloadAction<number>
-): Generator<any, void, any> {
+function* deleteTodoSaga(action: PayloadAction<number>): Generator {
   try {
     yield call(deleteTodoApi, action.payload);
     yield put(resetError());
@@ -47,7 +45,7 @@ function* deleteTodoSaga(
   }
 }
 
-function* editTodoSaga(action: PayloadAction<Todo>): Generator<any, void, any> {
+function* editTodoSaga(action: PayloadAction<Todo>): Generator {
   try {
     yield call(editTodoApi, action.payload);
     yield put(resetError());
