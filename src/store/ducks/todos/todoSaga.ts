@@ -1,33 +1,38 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { all, call, put, takeLatest } from "redux-saga/effects";
+
+import { Todo } from "./types";
 import {
   getTodosApi,
   addTodoApi,
   deleteTodoApi,
   editTodoApi,
-} from "../api/todoApi";
+} from "../../../api/todoApi";
 import {
-  Todo,
-  setTodoList,
   addTodo,
   deleteTodo,
   updateTodo,
+  fetchTodos,
+  fetchTodosSuccess,
+  apiFail,
+  resetError,
 } from "./todoSlice";
 
 function* addTodoSaga(action: PayloadAction<Todo>): Generator<any, void, any> {
   try {
     yield call(addTodoApi, action.payload);
+    yield put(resetError());
   } catch (error) {
-    console.error("Error adding todo:", error);
+    yield put(apiFail("Error: " + (error as Error).message));
   }
 }
 
 function* fetchTodosSaga(): Generator<any, void, any> {
   try {
     const todos = yield call(getTodosApi);
-    yield put(setTodoList(todos));
+    yield put(fetchTodosSuccess(todos));
   } catch (error) {
-    console.error("Error fetching todos:", error);
+    yield put(apiFail("Error: " + (error as Error).message));
   }
 }
 
@@ -36,23 +41,25 @@ function* deleteTodoSaga(
 ): Generator<any, void, any> {
   try {
     yield call(deleteTodoApi, action.payload);
+    yield put(resetError());
   } catch (error) {
-    console.error("Error deleting todo:", error);
+    yield put(apiFail("Error: " + (error as Error).message));
   }
 }
 
 function* editTodoSaga(action: PayloadAction<Todo>): Generator<any, void, any> {
   try {
     yield call(editTodoApi, action.payload);
+    yield put(resetError());
   } catch (error) {
-    console.error("Error fetching todos:", error);
+    yield put(apiFail("Error: " + (error as Error).message));
   }
 }
 
 function* todoSaga() {
   yield all([
     takeLatest(addTodo.type, addTodoSaga),
-    takeLatest("todos/fetchTodos", fetchTodosSaga),
+    takeLatest(fetchTodos.type, fetchTodosSaga),
     takeLatest(deleteTodo.type, deleteTodoSaga),
     takeLatest(updateTodo.type, editTodoSaga),
   ]);

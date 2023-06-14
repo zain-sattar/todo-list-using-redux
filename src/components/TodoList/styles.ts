@@ -13,6 +13,9 @@ const todoListStyle = {
     alignItems: "center",
     justifyContent: "flex-start",
   },
+  errorStyle: {
+    margin: "0px 50px",
+  },
   todoTaskStyle: {
     height: 35,
     width: "300px",

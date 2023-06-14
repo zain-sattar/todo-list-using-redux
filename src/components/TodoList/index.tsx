@@ -1,41 +1,68 @@
 import { CardContent, Box, Typography, IconButton } from "@mui/material";
 import { Edit, Delete, Done } from "@mui/icons-material";
-import { useSelector, useDispatch } from "react-redux";
-
 import { useEffect } from "react";
-import { RootState } from "../../store/store";
-import {
-  Todo,
-  updateTodo,
-  deleteTodo,
-  setTodoItem,
-} from "../../store/todoSlice";
+
+import { Todo } from "../../store/ducks/todos/types";
 import style from "./styles";
 
-function TodoList() {
-  const todos = useSelector((state: RootState) => state.todoList.todos);
-  const dispatch = useDispatch();
+interface TodoListProps {
+  todos: Todo[];
+  loading: boolean;
+  error: string | null;
+  fetchTodos: () => void;
+  updateTodo: (todo: Todo) => void;
+  deleteTodo: (id: number) => void;
+  setTodo: (todo: Todo) => void;
+}
+
+const TodoList: React.FC<TodoListProps> = (props) => {
+  const {
+    todos,
+    loading,
+    error,
+    fetchTodos,
+    updateTodo,
+    deleteTodo,
+    setTodo,
+  } = props;
 
   useEffect(() => {
-    dispatch({ type: "todos/fetchTodos" });
-  }, [dispatch]);
+    fetchTodos();
+  }, [fetchTodos]);
 
   const toggleCompletionHandler = async (todo: Todo) => {
     const updatedTodo = { ...todo, isCompleted: !todo.isCompleted };
-    dispatch(updateTodo(updatedTodo));
+    updateTodo(updatedTodo);
   };
 
   const editHandler = async (todo: Todo) => {
-    dispatch(setTodoItem(todo));
+    setTodo(todo);
   };
 
   const deleteHandler = async (id: number = 0) => {
-    dispatch(deleteTodo(id));
+    deleteTodo(id);
   };
+
+  if (loading)
+    return (
+      <CardContent sx={style.body}>
+        <Typography variant="h5" sx={style.errorStyle}>
+          Loading...
+        </Typography>
+      </CardContent>
+    );
+  if (error)
+    return (
+      <CardContent sx={style.body}>
+        <Typography variant="h5" sx={style.errorStyle}>
+          {error}
+        </Typography>
+      </CardContent>
+    );
 
   return (
     <CardContent sx={style.body}>
-      {todos?.map((todo) => (
+      {todos?.map((todo: Todo) => (
         <Box key={todo.id} sx={style.todoTaskBoxStyle}>
           <Typography
             variant="h6"
@@ -74,6 +101,6 @@ function TodoList() {
       ))}
     </CardContent>
   );
-}
+};
 
 export default TodoList;

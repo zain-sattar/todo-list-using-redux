@@ -5,20 +5,24 @@ import { useEffect } from "react";
 
 import { todoSchema } from "../../utils/data";
 import todoActionsStyle from "./styles";
-import { Todo, addTodo, setTodoItem, updateTodo } from "../../store/todoSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../store/store";
+import { Todo } from "../../store/ducks/todos/types";
 
-function TodoActions() {
-  const selectedTodo = useSelector(
-    (state: RootState) => state.todoList.todoItem
-  );
-  const dispatch = useDispatch();
+interface TodoActionsProps {
+  selectedTodo: Todo | undefined;
+  addTodo: (todo: Todo) => void;
+  updateTodo: (todo: Todo) => void;
+  setTodo: (todo: Todo | undefined) => void;
+}
+
+const TodoActions: React.FC<TodoActionsProps> = (props) => {
+  const { selectedTodo, addTodo, updateTodo, setTodo } = props;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(todoSchema),
   });
@@ -29,19 +33,20 @@ function TodoActions() {
         ...selectedTodo,
         task: data.todoTask,
       } as Todo;
-      dispatch(updateTodo(updatedTodo));
+      updateTodo(updatedTodo);
+      setTodo(undefined);
     } else {
       const todoTask: Todo = {
         task: data.todoTask,
         isCompleted: false,
       };
-      dispatch(addTodo(todoTask));
+      addTodo(todoTask);
     }
-    dispatch(setTodoItem(undefined));
+    reset();
   };
 
   const onCancelHandler = () => {
-    dispatch(setTodoItem(undefined));
+    setTodo(undefined);
   };
 
   useEffect(() => {
@@ -96,6 +101,6 @@ function TodoActions() {
       </CardActions>
     </Box>
   );
-}
+};
 
 export default TodoActions;

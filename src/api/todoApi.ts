@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Todo } from "../store/todoSlice";
+import { Todo } from "../store/ducks/todos/types";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const todoApi = axios.create({

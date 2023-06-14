@@ -1,24 +1,19 @@
 {
   "todos": [
     {
-      "task": "do some work",
+      "task": "x",
       "isCompleted": false,
-      "id": 7
+      "id": 17
     },
     {
-      "task": "xnm",
+      "task": "learn react-hook-state",
       "isCompleted": false,
-      "id": 8
+      "id": 22
     },
     {
-      "task": "test datat 2",
+      "task": "learn react",
       "isCompleted": false,
-      "id": 9
-    },
-    {
-      "task": "test datat 2",
-      "isCompleted": false,
-      "id": 10
+      "id": 23
     }
   ]
 }
